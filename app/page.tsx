@@ -12,7 +12,6 @@ import AboutUs from '@/components/AboutUs';
 import './globals.css';
 import type { Metadata } from 'next'; 
 import ValuesSection from '@/components/ValuesSection';
-import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
   title: 'CORDEL | História & Direito',
@@ -30,7 +29,6 @@ export default function RootLayout({
       <AboutUs />
       
       <ValuesSection />
-      <Footer />
         {children}
       </body>
     </html>

@@ -1,0 +1,171 @@
+.main { 
+  min-height: 100vh; 
+  background-color: #fdfaf3; 
+  padding-bottom: 100px; 
+}
+
+.container { 
+  max-width: 900px; 
+  margin: 0 auto; 
+  padding: 0 5%; 
+}
+
+/* --- HERO SECTION (LIMPA) --- */
+.hero { 
+  width: 100%;
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  padding: 60px 20px 20px 20px; /* Mais espaço no topo */
+  background-color: transparent; /* Remove o fundo vermelho */
+}
+
+.heroLogo {
+  width: 100%; /* Permite que cresça até o limite do max-width */
+  height: auto; 
+  max-width: 800px; /* Aumentamos o limite para ocupar bem a página */
+  object-fit: contain;
+  /* Sombra sutil para dar profundidade sobre o fundo claro */
+  filter: drop-shadow(0px 8px 20px rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s ease;
+}
+
+.heroLogo:hover {
+  transform: scale(1.02);
+}
+
+.intro { 
+  padding: 20px 0 40px 0; 
+  text-align: center; 
+  font-style: italic; 
+  color: #666; 
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* --- ESTILO DO ACCORDION --- */
+.accordion {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  background-color: white;
+}
+
+.accordionItem {
+  background: white;
+  border-bottom: 1px solid #eee;
+}
+
+.itemHeader {
+  width: 100%;
+  padding: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  text-align: left;
+}
+
+.itemHeader:hover {
+  background-color: #fff9f9;
+}
+
+.itemHeader.active {
+  background-color: #fffdfd;
+  border-left: 6px solid var(--primary-color);
+}
+
+.authorName {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.icon {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+/* --- LÓGICA DE EXPANSÃO --- */
+.itemContent {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: #fafafa;
+}
+
+.itemContent.show {
+  max-height: 1000px; 
+}
+
+.contentInner {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  padding: 40px; /* Padding interno para o conteúdo respirar */
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.itemContent.show .contentInner {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.authorImage {
+  border-radius: 8px;
+  border: 3px solid var(--secondary-color);
+  background-color: white;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.authorInfo {
+  flex: 1;
+}
+
+.authorInfo p {
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 25px;
+  font-size: 1.1rem;
+  text-align: justify;
+}
+
+.readMoreBtn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: filter 0.3s ease;
+}
+
+.readMoreBtn:hover {
+  filter: brightness(1.2);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .heroLogo {
+    max-width: 90%;
+  }
+
+  .contentInner { 
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center; 
+    padding: 30px 20px;
+  }
+
+  .authorInfo p {
+    text-align: center;
+  }
+}

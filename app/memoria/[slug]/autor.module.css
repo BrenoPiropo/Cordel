@@ -1,0 +1,141 @@
+.container {
+  max-width: 800px; /* Largura ideal para leitura de artigos */
+  margin: 0 auto;
+  padding: 60px 5%;
+  background-color: #fdfaf3;
+}
+
+/* --- BOTÃO VOLTAR REFORMULADO --- */
+.backLink {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex; /* Alinha ícone e texto perfeitamente */
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 40px;
+  padding: 10px 18px;
+  border: 2px solid var(--primary-color);
+  border-radius: 50px; /* Estilo pílula/arredondado */
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background-color: transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  align-self: flex-start; /* Garante que ele fique à esquerda mesmo no container flex */
+}
+
+.backLink:hover {
+  background-color: var(--primary-color);
+  color: white;
+  transform: translateX(-5px); /* Efeito sutil de recuo para a esquerda */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Criando uma seta mais bonita sem precisar de biblioteca de ícones */
+.backLink::before {
+  content: '←';
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.backLink:hover::before {
+  transform: translateX(-3px);
+}
+.article {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza a foto e títulos */
+}
+
+.imageSection {
+  margin-bottom: 30px;
+}
+
+.mainImage {
+  border-radius: 4px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  object-fit: cover;
+}
+
+.authorTitle {
+  font-size: 2.8rem;
+  color: #1a1a1a;
+  margin-bottom: 10px;
+  text-align: center;
+  font-family: serif;
+}
+
+.metaData {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 40px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.divider { margin: 0 8px; color: #ccc; }
+.category { color: var(--primary-color); font-weight: bold; }
+
+.descriptionText {
+  line-height: 1.8;
+  font-size: 1.15rem;
+  color: #333;
+  text-align: justify;
+  margin-bottom: 40px;
+}
+
+.keywordsSection {
+  width: 100%;
+  margin-bottom: 30px;
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+}
+
+.keywordsSection h3 {
+  font-size: 1rem;
+  color: #000;
+  margin-bottom: 5px;
+}
+
+.creditsSection {
+  width: 100%;
+  font-size: 0.95rem;
+  color: #555;
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .authorTitle { font-size: 2rem; }
+  .mainImage { width: 100%; height: auto; }
+}
+.pdfContainer {
+  margin-top: 60px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 40px;
+}
+
+.pdfButton {
+  background-color: var(--primary-color);
+  color: white;
+  text-decoration: none;
+  padding: 16px 32px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.pdfButton:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}

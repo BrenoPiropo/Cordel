@@ -1,5 +1,7 @@
-// src/app/layout.tsx (Para referência)
+// src/app/layout.tsx
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import './globals.css';
 
 export default function RootLayout({
   children,
@@ -10,8 +12,11 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body>
         <Header /> 
+        
+        {/* Aqui entra o conteúdo de QUALQUER página que você criar */}
+        {children} 
 
-        {children} {/* Aqui é onde o Hero e o restante da LP são renderizados */}
+        <Footer />
       </body>
     </html>
   );
