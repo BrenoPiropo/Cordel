@@ -1,0 +1,71 @@
+/* src/components/ValuesSection.module.css */
+
+.valuesSection {
+  padding: 80px 5%;
+  /* Fundo na cor primária para um impacto visual, contrastando com o branco/cinza */
+  background-color: var(--primary-color); 
+  color: white;
+  text-align: center;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  color: white; /* Título branco no fundo vermelho */
+  margin-bottom: 40px;
+}
+
+.valuesGrid {
+  /* Layout: 3 colunas em telas grandes */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  list-style: none;
+  padding: 0;
+}
+
+.valueCard {
+  /* Estilo do Card individual */
+  background-color: white;
+  color: var(--text-color);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.valueCard:hover {
+  transform: translateY(-5px); /* Efeito sutil de elevação no hover */
+}
+
+.valueIcon {
+  display: inline-block;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  margin-bottom: 15px;
+}
+
+.valueText {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Responsividade: Ajuste para telas menores */
+@media (max-width: 600px) {
+  .valuesGrid {
+    /* 1 coluna em telas muito pequenas */
+    grid-template-columns: 1fr;
+  }
+}

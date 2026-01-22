@@ -1,0 +1,83 @@
+.heroSection {
+  /* Layout: Grid ou Flex para dividir conteúdo e imagem */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 80px 5%; /* Padding vertical e nas laterais */
+  min-height: 80vh; /* Ocupa a maior parte da tela */
+  gap: 40px;
+  
+  /* Borda sutil que remete a um folheto */
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.heroContent {
+  max-width: 600px;
+}
+
+.headline {
+  /* Fonte Forte e em Destaque */
+  font-size: 3rem; 
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  color: var(--text-color);
+}
+
+.ctaButton {
+  /* Estilo do Botão: Contraste e Tema Cordel */
+  display: inline-block;
+  background-color: var(--primary-color); /* Vermelho Escuro */
+  color: white;
+  padding: 15px 30px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: background-color 0.3s, transform 0.2s;
+
+  /* Sombra para dar profundidade (efeito 3D) */
+  box-shadow: 4px 4px 0px 0px #333; 
+}
+
+.ctaButton:hover {
+  background-color: #791a1a; /* Tonalidade mais escura no hover */
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px 0px #333; 
+}
+
+.heroImagePlaceholder {
+  /* Área para a futura imagem/xilogravura */
+  width: 40%;
+  min-height: 400px;
+  background-color: #F8E8C7; /* Cor de Ocre/Areia */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 5px dashed var(--primary-color);
+}
+
+/* Estilo de Responsividade (Aprender sobre Media Queries)
+  No celular, o layout deve mudar para empilhado.
+*/
+@media (max-width: 768px) {
+  .heroSection {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 5%;
+  }
+
+  .heroImagePlaceholder {
+    width: 100%;
+    margin-top: 40px;
+  }
+
+  .headline {
+    font-size: 2.2rem;
+  }
+}

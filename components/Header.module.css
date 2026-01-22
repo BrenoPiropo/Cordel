@@ -1,0 +1,85 @@
+/* src/components/Header.module.css */
+
+.header {
+  /* Fixo no topo e acima de outros elementos */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  
+  /* Estilo visual */
+  background-color: white; 
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.container {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  padding: 15px 5%; 
+  max-width: 1400px; /* Limita a largura em telas muito grandes */
+  margin: 0 auto;
+}
+
+/* --- LOGO --- */
+
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px; 
+  text-decoration: none; 
+}
+
+.logoIcon {
+  /* Ajuste de estilo, se necessário (ex: arredondamento) */
+}
+
+.logoText {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--primary-color); 
+}
+
+/* --- NAVEGAÇÃO --- */
+
+.navList {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  padding: 0;
+  margin: 0;
+}
+
+.navLink {
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 0.95rem;
+  padding: 5px 0;
+  transition: color 0.3s, border-bottom 0.3s;
+  white-space: nowrap; /* Impede que os nomes dos links quebrem */
+}
+
+.navLink:hover {
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color); 
+}
+
+/* --- RESPONSIVIDADE --- */
+
+@media (max-width: 1200px) {
+  /* Reduz o espaçamento do menu em telas menores */
+  .navList {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 992px) {
+  /* Para tablets e celulares, escondemos a navegação (necessitaria de um botão hambúrguer JS) */
+  .nav {
+    display: none; 
+  }
+  
+  .container {
+    justify-content: center; /* Centraliza o logo */
+  }
+}
