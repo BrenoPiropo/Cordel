@@ -1,121 +1,110 @@
-/* src/components/AboutUs.module.css */
-
 .aboutSection {
-  /* Padding padrão e cor de fundo limpa */
-  padding: 80px 5%;
-  background-color: #ffffff; 
-  text-align: left; 
-  border-bottom: 1px solid #eee;
+  padding: 100px 5%;
+  background-color: #fdfaf3; /* Tom de papel antigo */
+  overflow: hidden;
 }
 
-/* ------------------------------------------------------------------
-   Título (Mantemos o foco e centralização)
-   ------------------------------------------------------------------ */
-.sectionTitleWrapper {
-    text-align: center;
-    margin-bottom: 40px;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 60px;
+  align-items: center;
 }
 
 .sectionTitle {
-  font-size: 2.5rem;
-  color: var(--primary-color);
-  display: inline-block;
-  /* Destaque visual (Cordel) */
-  border-bottom: 4px solid var(--secondary-color); 
-  padding-bottom: 5px;
+  font-family: serif;
+  font-size: 3rem;
+  color: #4a3728;
+  margin-bottom: 10px;
 }
 
-/* ------------------------------------------------------------------
-   ✨ LAYOUT AVANÇADO: CSS Grid de Duas Colunas (Texto Esquerda / Imagem Direita)
-   ------------------------------------------------------------------ */
-.contentGrid {
-  display: grid;
-  /* Assimetria: Coluna 1 (Texto) maior (1.5 partes), Coluna 2 (Imagem) menor (1 parte) */
-  grid-template-columns: 1.5fr 1fr; 
-  gap: 60px;
-  max-width: 1200px;
-  margin: 0 auto;
-  align-items: center; 
+.divider {
+  width: 80px;
+  height: 4px;
+  background-color: #8b4513;
+  margin-bottom: 30px;
 }
 
-.imageContainer {
-  /* Centraliza o ícone dentro da sua coluna */
-  display: flex;
-  justify-content: center; 
-  align-items: center;
-  padding: 20px;
-  /* Estilo de destaque para a área do ícone */
-  border: 4px solid var(--secondary-color);
-  border-radius: 8px;
-  background-color: #fcfcfc;
-}
-
-.aboutImage {
-  /* O componente Next/Image recebe esses estilos */
-  object-fit: contain; 
-}
-
-.textContainer {
-    /* Não precisa de estilo complexo aqui */
-    text-align: left;
-}
-
-/* ------------------------------------------------------------------
-   Estilos de Texto
-   ------------------------------------------------------------------ */
 .paragraph {
   font-size: 1.15rem;
   line-height: 1.8;
-  color: var(--text-color);
-  margin-bottom: 25px;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: justify;
 }
 
 .highlight {
-  /* Estilo para dar destaque ao bloco de missão/objetivo */
-  font-style: italic;
+  background: rgba(139, 69, 19, 0.05);
   padding: 20px;
-  border-left: 5px solid var(--secondary-color); 
-  background-color: #f0f0f0; 
-  box-shadow: none; 
+  border-left: 4px solid #8b4513;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
 }
 
+/* --- UX DA IMAGEM --- */
 
-/* ------------------------------------------------------------------
-   📱 RESPONSIVIDADE (Ajustes para Mobile/Tablet)
-   ------------------------------------------------------------------ */
-@media (max-width: 900px) {
+.imageWrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.woodcutFrame {
+  position: relative;
+  z-index: 2;
+  padding: 15px;
+  background: white;
+  box-shadow: 
+    0 10px 30px rgba(0,0,0,0.1),
+    0 1px 8px rgba(0,0,0,0.05);
+  border: 1px solid #ddd;
+  /* Simula papel levemente irregular */
+  border-radius: 2px;
+  transform: rotate(2deg); /* Inclinação orgânica */
+  transition: transform 0.4s ease;
+}
+
+.woodcutFrame:hover {
+  transform: rotate(0deg) scale(1.05);
+}
+
+.aboutImage {
+  display: block;
+  object-fit: cover;
+  filter: sepia(0.2) contrast(1.1); /* Efeito vintage */
+}
+
+/* Forma decorativa que fica atrás da imagem */
+.decorativeShape {
+  position: absolute;
+  width: 110%;
+  height: 110%;
+  background-color: #8b4513;
+  opacity: 0.1;
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; /* Forma orgânica */
+  z-index: 1;
+  animation: morph 8s ease-in-out infinite;
+}
+
+@keyframes morph {
+  0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+  50% { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
+  100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
   .contentGrid {
-    /* Em telas menores, muda para uma única coluna */
     grid-template-columns: 1fr;
-    gap: 40px;
-  }
-  
-  .imageContainer {
-    /* Remove a borda e o padding no mobile para dar mais espaço */
-    order: 1; 
-    padding: 0;
-    border: none;
-    background-color: transparent;
-  }
-
-  .textContainer {
-    /* Coloca o texto no topo e centraliza para mobile */
-    order: -1; 
     text-align: center;
   }
-  
-  /* Reduz o tamanho do ícone no mobile para ser menos dominante */
-  .aboutImage {
-    /* Ajusta o tamanho do ícone para mobile (Redução do tamanho grande) */
-    width: 180px !important; /* Tamanho razoável para mobile */
-    height: 180px !important;
-    margin: 0 auto;
-  }
-  
-  .sectionTitle {
-    font-size: 2rem;
-  }
-  .paragraph {
-    font-size: 1rem;
-  }
+  .divider { margin: 0 auto 30px; }
+  .woodcutFrame { transform: rotate(0); }
+  .imageWrapper { order: -1; } /* Imagem vai para cima no mobile */
 }

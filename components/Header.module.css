@@ -1,85 +1,92 @@
-/* src/components/Header.module.css */
-
 .header {
-  /* Fixo no topo e acima de outros elementos */
   position: sticky;
   top: 0;
   z-index: 1000;
-  
-  /* Estilo visual */
-  background-color: white; 
-  border-bottom: 1px solid #ddd;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  background-color: #fdfaf3; /* Fundo creme da imagem */
+  /* Borda superior grossa como na referência */
+  border-top: 6px solid #8b4513; 
+  border-bottom: 1px solid rgba(139, 69, 19, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
 }
 
 .container {
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
   align-items: center;
-  padding: 15px 5%; 
-  max-width: 1400px; /* Limita a largura em telas muito grandes */
+  padding: 20px 5%;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
-/* --- LOGO --- */
-
+/* --- LOGO UX --- */
 .logoWrapper {
-  display: flex;
-  align-items: center;
-  gap: 8px; 
-  text-decoration: none; 
+  transition: opacity 0.3s ease;
+}
+
+.logoWrapper:hover {
+  opacity: 0.8;
 }
 
 .logoIcon {
-  /* Ajuste de estilo, se necessário (ex: arredondamento) */
+  object-fit: contain;
+  /* Filtro suave para a logo não parecer um adesivo colado */
+  filter: multiply(1.1); 
 }
 
-.logoText {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: var(--primary-color); 
-}
-
-/* --- NAVEGAÇÃO --- */
-
+/* --- NAV UX --- */
 .navList {
   list-style: none;
   display: flex;
-  gap: 25px;
+  gap: 35px;
   padding: 0;
   margin: 0;
 }
 
 .navLink {
-  color: var(--text-color);
+  color: #4a3728; /* Marrom escuro para legibilidade */
   text-decoration: none;
-  font-size: 0.95rem;
-  padding: 5px 0;
-  transition: color 0.3s, border-bottom 0.3s;
-  white-space: nowrap; /* Impede que os nomes dos links quebrem */
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Georgia', serif; /* Fonte serifada para o tema cordel */
+  position: relative;
+  transition: color 0.3s;
+}
+
+/* Efeito de hover minimalista (linha que cresce) */
+.navLink::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -4px;
+  left: 0;
+  background-color: #8b4513;
+  transition: width 0.3s ease;
 }
 
 .navLink:hover {
-  color: var(--primary-color);
-  border-bottom: 2px solid var(--primary-color); 
+  color: #8b4513;
+}
+
+.navLink:hover::after {
+  width: 100%;
 }
 
 /* --- RESPONSIVIDADE --- */
-
-@media (max-width: 1200px) {
-  /* Reduz o espaçamento do menu em telas menores */
+@media (max-width: 992px) {
   .navList {
     gap: 15px;
   }
+  .navLink {
+    font-size: 0.8rem;
+  }
 }
 
-@media (max-width: 992px) {
-  /* Para tablets e celulares, escondemos a navegação (necessitaria de um botão hambúrguer JS) */
-  .nav {
-    display: none; 
-  }
-  
+@media (max-width: 768px) {
   .container {
-    justify-content: center; /* Centraliza o logo */
+    flex-direction: column;
+    gap: 15px;
   }
 }

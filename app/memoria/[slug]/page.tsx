@@ -15,7 +15,7 @@ const DADOS_AUTORES = {
     autoras: "RAMOS, Jaslayne Santos; SANTOS, Maria Beatriz Mendes Mattos; SOUSA, Maria Eduarda Martins Chagas",
     revisao: "MERCÊS, Sandy Stely dos Santos.",
     imagem: "/Cristiano-Chaves-imagem.png",
-    linkPDF: "/pdfs/trabalho-cristiano-chaves.pdf"
+    linkPDF: "/pdfs/CRISTIANO-CHAVES-DE-FARIAS.docx.pdf"
   },
   "filinto-bastos": {
     nome: "Filinto Justiniano Ferreira Bastos",
@@ -27,7 +27,7 @@ const DADOS_AUTORES = {
     autoras: "CERQUEIRA, Isla Gabrielly Santos, JESUS, Luís Cauã Araújo e ANDRADE, Pedro Felipe Menezes.",
     revisao: "MERCÊS, Sandy Stely dos Santos",
     imagem: "/Filinto-Justiniano-imagem-683x1024.png",
-    linkPDF: "/pdfs/trabalho-filinto-bastos.pdf"
+    linkPDF: "/pdfs/FILINTO-JUSTINIANO-FERREIRA-BASTOS.pdf"
   },
   "nestor-duarte": {
     nome: "Nestor Duarte Guimarães",
@@ -39,7 +39,7 @@ const DADOS_AUTORES = {
     autoras: "FARIAS, Beatriz Gomes, BERNARDES, Lorenzza Grecco SOUZA, Maria Clara Vieira de Moraes",
     revisao: "MERCÊS, Sandy Stely dos Santos",
     imagem: "/Nestor-Duarte-imagem-683x1024.png",
-    linkPDF: "/pdfs/trabalho-nestor-duarte.pdf"
+    linkPDF: "/pdfs/NESTOR-DUARTE-GUIMARAES-.pdf"
   }
 };
 

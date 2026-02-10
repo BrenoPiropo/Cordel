@@ -1,0 +1,134 @@
+.wrapper {
+  display: flex;
+  gap: 20px;
+  height: 600px;
+  width: 100%;
+}
+
+.sidebar {
+  flex: 1;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  overflow-y: auto;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.sidebarTitle {
+  font-family: serif;
+  color: #8b4513;
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+}
+
+.authorCard {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+  margin-bottom: 10px;
+}
+
+.authorCard:hover {
+  background: #fdfaf3;
+  border-color: #8b4513;
+  transform: translateX(5px);
+}
+
+.avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #8b4513;
+}
+
+.name {
+  font-weight: bold;
+  font-size: 0.95rem;
+  margin: 0;
+  color: #333;
+}
+
+.city {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.mapBox {
+  flex: 2;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.mapInstance {
+  height: 100%;
+  width: 100%;
+}
+.authorCard {
+  display: flex;
+  flex-direction: column; /* Mudado para column para o botão ficar embaixo */
+  padding: 15px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid #eee;
+  margin-bottom: 12px;
+  background: #fff;
+}
+
+.cardMainContent {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.activeCard {
+  border-color: var(--primary-color);
+  background: #fdfaf3;
+  box-shadow: 0 4px 12px rgba(139, 69, 19, 0.1);
+  transform: scale(1.02);
+}
+
+.actionWrapper {
+  margin-top: 15px;
+  padding-top: 12px;
+  border-top: 1px dashed #ddd;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.bioButton {
+  display: block;
+  text-align: center;
+  background-color: var(--primary-color);
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.bioButton:hover {
+  filter: brightness(1.2);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.popupLink {
+  color: #8b4513;
+  font-weight: bold;
+  display: block;
+  margin-top: 5px;
+}
+
+@media (max-width: 900px) {
+  .wrapper { flex-direction: column; height: auto; }
+  .mapBox { height: 400px; }
+}

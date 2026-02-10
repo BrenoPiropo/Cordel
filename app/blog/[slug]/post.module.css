@@ -1,0 +1,109 @@
+.container {
+  max-width: 800px; /* Largura ideal para leitura */
+  margin: 0 auto;
+  padding: 60px 5%;
+  background-color: #fdfaf3; /* Tom de papel antigo */
+  min-height: 100vh;
+}
+
+.backLink {
+  display: inline-block;
+  color: #8b4513; /* Marrom couro/cordel */
+  text-decoration: none;
+  font-weight: bold;
+  margin-bottom: 40px;
+  transition: transform 0.2s ease;
+}
+
+.backLink:hover {
+  transform: translateX(-5px);
+  text-decoration: underline;
+}
+
+.header {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.date {
+  font-size: 0.85rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.title {
+  font-family: 'serif';
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: #1a1a1a;
+  line-height: 1.1;
+  margin-top: 15px;
+}
+
+.mainImageWrapper {
+  position: relative;
+  width: 100%;
+  height: 450px;
+  margin-bottom: 50px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+  background-color: #eee;
+}
+
+.mainImage {
+  object-fit: cover;
+}
+
+.content {
+  line-height: 1.8;
+  font-size: 1.25rem;
+  color: #2c2c2c;
+}
+
+.content p {
+  margin-bottom: 25px;
+  text-align: justify;
+}
+
+/* Letra maior para o primeiro parágrafo */
+.content p:first-of-type::first-letter {
+  float: left;
+  font-size: 3.5rem;
+  line-height: 1;
+  font-weight: bold;
+  padding-right: 8px;
+  color: #8b4513;
+  font-family: serif;
+}
+
+.footer {
+  margin-top: 80px;
+  padding-bottom: 40px;
+}
+
+.shareSection {
+  text-align: center;
+  font-style: italic;
+  color: #555;
+}
+
+.divider {
+  height: 2px;
+  width: 60px;
+  background-color: #8b4513;
+  margin: 20px auto;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .mainImageWrapper {
+    height: 300px;
+  }
+  .content {
+    font-size: 1.15rem;
+  }
+  .content p {
+    text-align: left;
+  }
+}
