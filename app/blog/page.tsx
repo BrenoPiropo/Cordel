@@ -1,53 +1,39 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './blog.module.css';
+import axios from 'axios';
 
-// Dados expandidos para testar o comportamento do grid e da responsividade
-const POSTS = [
-  {
-    id: 1,
-    titulo: "A Influência do Direito de Família no Sertão Baiano",
-    resumo: "Uma análise profunda sobre como as tradições locais moldaram as decisões jurídicas no século passado, focando em processos de herança e sucessão.",
-    data: "10 Jan, 2026",
-    imagem: "/CORDEL_ICON_WITHOUT_BG.png", 
-    slug: "influencia-direito-familia"
-  },
-  {
-    id: 2,
-    titulo: "Novas Descobertas no Arquivo Público da Bahia: Documentos Inéditos",
-    resumo: "Nossa equipe de pesquisadores encontrou documentos inéditos sobre a atuação de Filinto Bastos durante o período abolicionista.",
-    data: "05 Jan, 2026",
-    imagem: "/CORDEL_ICON_WITHOUT_BG.png", // Teste de post sem imagem (o conteúdo deve ocupar 100% da largura)
-    slug: "descobertas-arquivo-publico"
-  },
-  {
-    id: 3,
-    titulo: "O Papel da Literatura de Cordel na Educação Jurídica Popular",
-    resumo: "Como as rimas e a métrica do cordel ajudam na disseminação do conhecimento jurídico para comunidades tradicionais.",
-    data: "02 Jan, 2026",
-    imagem: "/CORDEL_ICON_WITHOUT_BG.png",
-    slug: "cordel-educacao-juridica"
-  },
-  {
-    id: 4,
-    titulo: "Seminário de Direito e Memória: Inscrições Abertas",
-    resumo: "Participe do nosso próximo seminário onde discutiremos o legado de Nestor Duarte e a Reforma Agrária na Bahia.",
-    data: "28 Dez, 2025",
-    imagem: "/CORDEL_ICON_WITHOUT_BG.png",
-    slug: "seminario-inscricoes"
-  },
-  {
-    id: 5,
-    titulo: "A História Esquecida das Comarcas do Interior",
-    resumo: "Explorando os porões dos fóruns antigos em busca de memórias que definiram o Direito baiano moderno.",
-    data: "15 Dez, 2025",
-    imagem: "/CORDEL_ICON_WITHOUT_BG.png",
-    slug: "historia-esquecida"
-  }
-];
+// 1. AJUSTE NA INTERFACE: Mude imagem_capa para imagem_url (conforme sua Entity)
+interface BlogPost {
+  id: number;
+  titulo: string;
+  conteudo: string; 
+  imagem_url: string | null; // <--- Nome exato que vem do banco agora
+  slug: string;
+  data_criada: string;
+}
 
 export default function BlogPage() {
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/blog')
+      .then(response => {
+        setPosts(response.data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error("Erro ao carregar o blog:", error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <div className={styles.container}><p>Carregando as memórias do Cordel...</p></div>;
+
   return (
     <main className={styles.container}>
       <header className={styles.header}>
@@ -56,24 +42,37 @@ export default function BlogPage() {
       </header>
 
       <section className={styles.postsGrid}>
-        {POSTS.map((post) => (
+        {posts.map((post) => (
           <article key={post.id} className={styles.postCard}>
-            {/* Se houver imagem, renderiza o wrapper. Se não, o CSS deve ajustar o postContent */}
-            {post.imagem && (
-              <div className={styles.imageWrapper}>
-                <Image 
-                  src={post.imagem} 
-                  alt={post.titulo} 
-                  fill 
-                  className={styles.postImage}
-                />
-              </div>
-            )}
             
-            <div className={`${styles.postContent} ${!post.imagem ? styles.fullWidth : ''}`}>
-              <span className={styles.date}>{post.data}</span>
+            <div className={styles.imageWrapper}>
+              {/* 2. AJUSTE NO SRC: Use post.imagem_url */}
+              <Image 
+                src={post.imagem_url?.startsWith('http') 
+                  ? post.imagem_url 
+                  : post.imagem_url 
+                    ? `http://localhost:3001${post.imagem_url}` 
+                    : "/CORDEL_ICON_WITHOUT_BG.png"
+                } 
+                alt={post.titulo} 
+                fill 
+                className={styles.postImage}
+                unoptimized // Evita erros de otimização em localhost
+              />
+            </div>
+            
+            {/* 3. AJUSTE NA CLASSE: Use post.imagem_url */}
+            <div className={`${styles.postContent} ${!post.imagem_url ? styles.fullWidth : ''}`}>
+              <span className={styles.date}>
+                {new Date(post.data_criada).toLocaleDateString('pt-BR')}
+              </span>
               <h2 className={styles.postTitle}>{post.titulo}</h2>
-              <p className={styles.resumo}>{post.resumo}</p>
+              
+              <p className={styles.resumo}>
+                {post.conteudo && post.conteudo.length > 150 
+                  ? post.conteudo.substring(0, 150) + '...' 
+                  : post.conteudo}
+              </p>
               
               <Link href={`/blog/${post.slug}`} className={styles.readMore}>
                 Ler artigo completo →

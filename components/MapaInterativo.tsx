@@ -5,9 +5,11 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import styles from './MapaInterativo.module.css';
 
+// Configuração do Ícone do Leaflet
 const customIcon = new L.Icon({
   iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
@@ -15,85 +17,100 @@ const customIcon = new L.Icon({
   iconAnchor: [12, 41],
 });
 
-const PONTOS_AUTORES = [
-  {
-    id: 1,
-    nome: "Cristiano Chaves de Farias",
-    cidade: "Salvador - BA",
-    coords: [-12.9714, -38.5014] as [number, number],
-    slug: "cristiano-chaves",
-    imagem: "/Cristiano-Chaves-imagem.png"
-  },
-  {
-    id: 2,
-    nome: "Filinto Justiniano Ferreira Bastos",
-    cidade: "Feira de Santana - BA",
-    coords: [-12.2575, -38.9597] as [number, number],
-    slug: "filinto-bastos",
-    imagem: "/Filinto-Justiniano-imagem-683x1024.png"
-  },
-  {
-    id: 3,
-    nome: "Nestor Duarte Guimarães",
-    cidade: "Caetité - BA",
-    coords: [-14.0694, -42.4842] as [number, number],
-    slug: "nestor-duarte",
-    imagem: "/Nestor-Duarte-imagem-683x1024.png"
-  }
-];
+// Interface baseada na sua Entity Memorial
+interface AutorPonto {
+  id: number;
+  nome: string;
+  latitude: string; // O MySQL Decimal costuma vir como string no JSON
+  longitude: string;
+  slug: string;
+  foto_url: string | null;
+  biografia: string;
+}
 
 function ChangeView({ center }: { center: [number, number] }) {
   const map = useMap();
-  map.setView(center, 9, { animate: true });
+  map.setView(center, map.getZoom(), { animate: true });
   return null;
 }
 
 export default function MapaInterativo() {
+  const [autores, setAutores] = useState<AutorPonto[]>([]);
   const [foco, setFoco] = useState<[number, number]>([-12.5, -40.0]);
   const [autorSelecionado, setAutorSelecionado] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const selecionarAutor = (autor: typeof PONTOS_AUTORES[0]) => {
-    setFoco(autor.coords);
+  // 1. Busca os dados reais do Back-end
+  useEffect(() => {
+    axios.get('http://localhost:3001/memorial')
+      .then(res => {
+        setAutores(res.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Erro ao carregar mapa:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  const selecionarAutor = (autor: AutorPonto) => {
+    const coords: [number, number] = [Number(autor.latitude), Number(autor.longitude)];
+    setFoco(coords);
     setAutorSelecionado(autor.id);
   };
 
+  if (loading) return <p>Carregando coordenadas dos juristas...</p>;
+
   return (
     <div className={styles.wrapper}>
-      {/* 📜 LISTA LATERAL */}
+      {/* 📜 LISTA LATERAL DINÂMICA */}
       <aside className={styles.sidebar}>
         <h2 className={styles.sidebarTitle}>Juristas por Região</h2>
         <div className={styles.list}>
-          {PONTOS_AUTORES.map((autor) => (
-            <div 
-              key={autor.id} 
-              className={`${styles.authorCard} ${autorSelecionado === autor.id ? styles.activeCard : ''}`}
-              onMouseEnter={() => setFoco(autor.coords)}
-              onClick={() => selecionarAutor(autor)}
-            >
-              <div className={styles.cardMainContent}>
-                <div className={styles.avatarWrapper}>
-                  <Image src={autor.imagem} alt={autor.nome} width={60} height={60} className={styles.avatar} />
+          {autores.map((autor) => {
+            const coords: [number, number] = [Number(autor.latitude), Number(autor.longitude)];
+            return (
+              <div 
+                key={autor.id} 
+                className={`${styles.authorCard} ${autorSelecionado === autor.id ? styles.activeCard : ''}`}
+                onMouseEnter={() => setFoco(coords)}
+                onClick={() => selecionarAutor(autor)}
+              >
+                <div className={styles.cardMainContent}>
+                  <div className={styles.avatarWrapper}>
+                    <Image 
+                      src={autor.foto_url?.startsWith('http') 
+                        ? autor.foto_url 
+                        : autor.foto_url 
+                          ? `http://localhost:3001${autor.foto_url}` 
+                          : "/CORDEL_ICON_WITHOUT_BG.png"
+                      } 
+                      alt={autor.nome} 
+                      width={60} 
+                      height={60} 
+                      className={styles.avatar} 
+                    />
+                  </div>
+                  <div className={styles.info}>
+                    <p className={styles.name}>{autor.nome}</p>
+                    <span className={styles.city}>Ver no mapa</span>
+                  </div>
                 </div>
-                <div className={styles.info}>
-                  <p className={styles.name}>{autor.nome}</p>
-                  <span className={styles.city}>{autor.cidade}</span>
-                </div>
-              </div>
 
-              {/* ✨ BOTÃO DINÂMICO: Aparece apenas se o autor estiver selecionado */}
-              {autorSelecionado === autor.id && (
-                <div className={styles.actionWrapper}>
-                  <Link href={`/memoria/${autor.slug}`} className={styles.bioButton}>
-                    Ver Biografia Completa →
-                  </Link>
-                </div>
-              )}
-            </div>
-          ))}
+                {autorSelecionado === autor.id && (
+                  <div className={styles.actionWrapper}>
+                    <Link href={`/memoria/${autor.slug}`} className={styles.bioButton}>
+                      Ver Biografia Completa →
+                    </Link>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </aside>
 
-      {/* 🗺️ MAPA */}
+      {/* 🗺️ MAPA DINÂMICO */}
       <div className={styles.mapBox}>
         <MapContainer center={foco} zoom={6} className={styles.mapInstance}>
           <ChangeView center={foco} />
@@ -101,11 +118,20 @@ export default function MapaInterativo() {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; OpenStreetMap'
           />
-          {PONTOS_AUTORES.map((ponto) => (
-            <Marker key={ponto.id} position={ponto.coords} icon={customIcon}>
+          
+          {autores.map((ponto) => (
+            <Marker 
+              key={ponto.id} 
+              position={[Number(ponto.latitude), Number(ponto.longitude)]} 
+              icon={customIcon}
+            >
               <Popup>
-                <strong>{ponto.nome}</strong><br/>
-                {ponto.cidade}
+                <div style={{ textAlign: 'center' }}>
+                  <strong>{ponto.nome}</strong><br/>
+                  <Link href={`/memoria/${ponto.slug}`} style={{ fontSize: '12px', color: '#8b4513' }}>
+                    Ver biografia
+                  </Link>
+                </div>
               </Popup>
             </Marker>
           ))}

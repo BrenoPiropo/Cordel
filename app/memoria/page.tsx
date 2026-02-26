@@ -1,48 +1,43 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import Link from 'next/link'; // 1. Importamos o componente Link
+import Link from 'next/link';
+import axios from 'axios';
 import styles from './memoria.module.css';
 
+// Interface baseada na sua tabela de Memorial/Autores
 interface Autor {
   id: number;
   nome: string;
-  texto: string;
-  imagem: string;
-  slug: string; // 2. Adicionamos o slug para a URL amigável
+  biografia: string; // Verifique se no banco é 'texto' ou 'biografia'
+  foto_url: string | null;
+  slug: string;
 }
 
-const AUTORES: Autor[] = [
-  {
-    id: 1,
-    nome: "Cristiano Chaves de Farias",
-    texto: "Cristiano Chaves de Farias (1971-2023) foi um promotor de justiça e professor universitário. Nasceu na cidade de Salvador, no dia 10 de outubro de 1971, onde passou toda a sua vida e construiu sua jornada acadêmica.",
-    imagem: "/Cristiano-Chaves-imagem.png",
-    slug: "cristiano-chaves"
-  },
-  {
-    id: 2,
-    nome: "Filinto Justiniano Ferreira Bastos",
-    texto: "Filinto Justiniano Ferreira Bastos (1856-1939) foi um proeminente jurista, magistrado, professor da Faculdade de Direito da Bahia e abolicionista baiano.",
-    imagem: "/Filinto-Justiniano-imagem-683x1024.png",
-    slug: "filinto-bastos"
-  },
-  {
-    id: 3,
-    nome: "Nestor Duarte Guimarães",
-    texto: "Nestor Duarte Guimarães foi um importante jurista, romancista e político baiano, nascido em Caetité (BA) no dia 03 de dezembro de 1902.",
-    imagem: "/Nestor-Duarte-imagem-683x1024.png",
-    slug: "nestor-duarte"
-  }
-];
-
 export default function MemoriaPage() {
+  const [autores, setAutores] = useState<Autor[]>([]);
   const [idExpandido, setIdExpandido] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // Busca os autores do Back-end
+  useEffect(() => {
+    axios.get('http://localhost:3001/memorial') // Verifique se sua rota é /memorial ou /autores
+      .then(response => {
+        setAutores(response.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Erro ao carregar memorial:", err);
+        setLoading(false);
+      });
+  }, []);
 
   const toggleAutor = (id: number) => {
     setIdExpandido(idExpandido === id ? null : id);
   };
+
+  if (loading) return <div className={styles.main}><p>Carregando Memorial...</p></div>;
 
   return (
     <main className={styles.main}>
@@ -68,7 +63,7 @@ export default function MemoriaPage() {
       <section className={styles.authorsSection}>
         <div className={styles.container}>
           <div className={styles.accordion}>
-            {AUTORES.map((autor) => (
+            {autores.map((autor) => (
               <div key={autor.id} className={styles.accordionItem}>
                 <button 
                   className={`${styles.itemHeader} ${idExpandido === autor.id ? styles.active : ''}`}
@@ -82,7 +77,13 @@ export default function MemoriaPage() {
                   <div className={styles.contentInner}>
                     <div className={styles.authorImageWrapper}>
                       <Image 
-                        src={autor.imagem} 
+                        // Lógica para carregar imagem do back-end ou placeholder
+                        src={autor.foto_url?.startsWith('http') 
+                          ? autor.foto_url 
+                          : autor.foto_url 
+                            ? `http://localhost:3001${autor.foto_url}` 
+                            : "/CORDEL_ICON_WITHOUT_BG.png"
+                        } 
                         alt={autor.nome} 
                         width={150} 
                         height={150} 
@@ -90,9 +91,13 @@ export default function MemoriaPage() {
                       />
                     </div>
                     <div className={styles.authorInfo}>
-                      <p>{autor.texto}</p>
+                      {/* Mostra um resumo da biografia no acordeão */}
+                      <p>
+                        {autor.biografia.length > 200 
+                          ? autor.biografia.substring(0, 200) + '...' 
+                          : autor.biografia}
+                      </p>
                       
-                      {/* 3. Transformamos o botão em um Link dinâmico */}
                       <Link 
                         href={`/memoria/${autor.slug}`} 
                         className={styles.readMoreBtn}

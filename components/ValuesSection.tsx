@@ -1,46 +1,51 @@
-// src/components/ValuesSection.tsx
-import React from 'react';
+"use client";
+
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import styles from './ValuesSection.module.css';
 
-// ------------------------------------------------------------------
-// 📚 Tipagem e Dados
-// ------------------------------------------------------------------
-
 interface ValueItem {
-  id: number;
-  text: string;
+  titulo: string;
+  texto: string;
 }
 
-// Lista de valores do grupo de pesquisa
-const CORE_VALUES: ValueItem[] = [
-  { id: 1, text: 'Rigor Científico' },
-  { id: 2, text: 'Interdisciplinaridade' },
-  { id: 3, text: 'Preservação da Memória' },
-  { id: 4, text: 'Colaboração e Coletividade' },
-  { id: 5, text: 'Inovação Acadêmica' },
-  { id: 6, text: 'Educação e Formação' },
-];
-
 const ValuesSection: React.FC = () => {
+  const [valores, setValores] = useState<ValueItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchValores = async () => {
+      try {
+        const res = await axios.get('http://localhost:3001/institucional');
+        if (res.data && res.data.valores_json) {
+          setValores(JSON.parse(res.data.valores_json));
+        }
+      } catch (error) {
+        console.error("Erro ao carregar valores:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchValores();
+  }, []);
+
   return (
     <section className={styles.valuesSection}>
       <div className={styles.container}>
-        
         <h2 className={styles.sectionTitle}>Valores do Grupo de Pesquisa</h2>
-
-        {/* Layout em Grid/Lista */}
         <div className={styles.valuesGrid}>
-          {CORE_VALUES.map((item) => (
-            <div key={item.id} className={styles.valueCard}>
-              {/* O número (ID) serve como um ícone visual de destaque */}
-              <span className={styles.valueIcon}>{item.id}</span>
-              <h3 className={styles.valueText}>{item.text}</h3>
+          {!loading && valores.map((item, index) => (
+            <div key={index} className={styles.valueCard}>
+              <span className={styles.valueIcon}>{index + 1}</span>
+              <h3 className={styles.valueText}>{item.titulo}</h3>
+              {/* O texto que será revelado */}
+              <p className={styles.valueDescription}>{item.texto}</p>
             </div>
           ))}
         </div>
-        
       </div>
     </section>
   );
 };
+
 export default ValuesSection;

@@ -1,82 +1,67 @@
-// src/components/Footer.tsx
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { FiInstagram, FiMail, FiBook, FiLock } from 'react-icons/fi'; // Adicionei o ícone de cadeado
 import styles from './Footer.module.css';
 
-// ------------------------------------------------------------------
-// 📚 Dados para Links (Reutilizando a lógica do Header)
-// ------------------------------------------------------------------
-interface FooterLink {
-  label: string;
-  href: string;
-}
-
-const QUICK_LINKS: FooterLink[] = [
-  { label: 'Juristas em Cordel', href: '/juristas' },
-  { label: 'Memória Digital', href: '/memoria' },
-  { label: 'Publicações', href: '/publicacoes' },
-  { label: 'Políticas de Privacidade', href: '/privacidade' },
+const QUICK_LINKS = [
+  { label: 'Memorial Digital', href: '/memoria' },
+  { label: 'Blog & Artigos', href: '/blog' },
+  { label: 'Galeria', href: '/galeria' },
+  { label: 'Acesso Restrito', href: '/login' }, // Novo link de login
 ];
 
 const Footer: React.FC = () => {
-  const logoSize = 40;
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
         
-        {/* COLUNA 1: Logo e Missão */}
-        <div className={styles.col1}>
-          <Link href="/" className={styles.logoWrapper}>
+        <div className={styles.mainInfo}>
+          <div className={styles.brand}>
             <Image
-              src="/CORDEL_ICON_WITHOUT_BG.png" 
-              alt="Logo do Projeto Cordel"
-              width={logoSize}
-              height={logoSize}
-              className={styles.logoIcon}
+              src="/logo_cordel.jpg" 
+              alt="Logo Cordel"
+              width={250}
+              height={80}
+              className={styles.footerLogo}
             />
-            <span className={styles.logoText}>CORDEL</span>
-          </Link>
-          <p className={styles.mission}>
-            Projeto de Pesquisa e Extensão do Curso de Direito da UESC.
+          </div>
+          <p className={styles.description}>
+            Projeto de Pesquisa e Extensão da Universidade Estadual de Santa Cruz (UESC). 
+            Dedicado à preservação da memória jurídica baiana.
           </p>
         </div>
 
-        {/* COLUNA 2: Navegação Rápida */}
-        <div className={styles.col2}>
-          <h4 className={styles.columnTitle}>Links Úteis</h4>
-          <ul className={styles.linkList}>
-            {QUICK_LINKS.map((item) => (
-              <li key={item.href}>
-                <Link href={item.href} className={styles.footerLink}>
-                  {item.label}
+        <div className={styles.navGroup}>
+          <h4 className={styles.title}>Navegação</h4>
+          <ul className={styles.list}>
+            {QUICK_LINKS.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className={link.href === '/login' ? styles.loginLink : ''}>
+                  {link.href === '/login' && <FiLock size={12} style={{ marginRight: '5px' }} />}
+                  {link.label}
                 </Link>
               </li>
             ))}
           </ul>
         </div>
-        
-        {/* COLUNA 3: Contato e Social */}
-        <div className={styles.col3}>
-          <h4 className={styles.columnTitle}>Fale Conosco</h4>
-          <p>
-            E-mail: <a href="mailto:contato@cordel.org" className={styles.contactLink}>contato@cordel.org</a>
-          </p>
-          <div className={styles.socialIcons}>
-            {/* Ícones de redes sociais (substituir por SVGs ou componentes de ícone) */}
-            <p>[Ícone Instagram] [Ícone Lattes]</p>
+
+        <div className={styles.contactGroup}>
+          <h4 className={styles.title}>Contato</h4>
+          <div className={styles.socials}>
+            <a href="mailto:contato@cordel.org" title="E-mail"><FiMail /></a>
+            <a href="#" title="Instagram"><FiInstagram /></a>
+            <a href="#" title="Lattes"><FiBook /></a>
           </div>
+          <p className={styles.email}>contato@cordel.org</p>
         </div>
 
       </div>
 
-      {/* FOOTER INFERIOR (COPYRIGHT) */}
-      <div className={styles.bottomBar}>
-        <p>
-          &copy; {currentYear} CORDEL - História & Direito. Todos os direitos reservados.
-        </p>
+      <div className={styles.copyright}>
+        <p>&copy; {currentYear} CORDEL — História & Direito. Desenvolvido por Breno Piropo.</p>
       </div>
     </footer>
   );

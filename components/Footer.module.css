@@ -1,102 +1,158 @@
-/* src/components/Footer.module.css */
-
 .footer {
-  /* Fundo escuro para contraste */
-  background-color: var(--primary-color); /* Usando a cor primária para um footer mais temático */
-  color: white;
-  padding-top: 50px;
-  font-size: 0.95rem;
+  background-color: #0f172a; /* Azul muito escuro, quase preto */
+  color: #94a3b8; /* Cinza azulado suave */
+  padding: 80px 0 30px;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
 }
 
 .container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 3 Colunas responsivas */
-  gap: 40px;
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 0 5% 40px 5%;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 60px;
+  align-items: start;
 }
 
-/* --- COLUNAS --- */
-
-.logoWrapper {
+.brand {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.brandName {
+  color: #D4AF37;
+  font-weight: 800;
+  letter-spacing: 2px;
+  font-size: 1.2rem;
+}
+
+.description {
+  line-height: 1.6;
+  font-size: 0.95rem;
+  max-width: 350px;
+}
+
+.title {
+  color: #f1f5f9;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+}
+
+.list li {
+  margin-bottom: 12px;
+}
+
+.list a {
   text-decoration: none;
+  color: #94a3b8;
+  transition: color 0.3s;
+  font-size: 0.95rem;
+}
+
+.list a:hover {
+  color: #D4AF37;
+}
+
+.socials {
+  display: flex;
+  gap: 15px;
   margin-bottom: 15px;
 }
 
-.logoText {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: white; /* Texto do logo branco no footer */
+.socials a {
+  color: #f1f5f9;
+  font-size: 1.2rem;
+  transition: transform 0.3s, color 0.3s;
 }
 
-.mission {
-  opacity: 0.8;
-  line-height: 1.6;
+.socials a:hover {
+  color: #D4AF37;
+  transform: translateY(-3px);
 }
 
-.columnTitle {
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-  border-bottom: 2px solid var(--secondary-color); /* Linha de destaque para o título */
-  display: inline-block;
-  padding-bottom: 5px;
+.email {
+  font-size: 0.9rem;
 }
 
-/* --- LISTA DE LINKS --- */
-
-.linkList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.footerLink {
-  color: white;
-  text-decoration: none;
-  opacity: 0.8;
-  transition: opacity 0.2s;
-  display: block;
-  padding: 5px 0;
-}
-
-.footerLink:hover {
-  opacity: 1;
-  text-decoration: underline;
-}
-
-/* --- CONTATO --- */
-
-.contactLink {
-  color: white;
-  opacity: 0.8;
-  text-decoration: none;
-}
-
-.contactLink:hover {
-  opacity: 1;
-  text-decoration: underline;
-}
-
-.socialIcons {
-  margin-top: 15px;
-  /* Espaço para estilos de ícones de redes sociais */
-}
-
-/* --- BARRA INFERIOR DE COPYRIGHT --- */
-
-.bottomBar {
+.copyright {
+  max-width: 1100px;
+  margin: 60px auto 0;
+  padding: 30px 20px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
   text-align: center;
-  padding: 20px 5%;
-  background-color: #791a1a; /* Cor mais escura para a barra de copyright */
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.8rem;
+  opacity: 0.6;
 }
 
-.bottomBar p {
-  margin: 0;
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+  .brand, .socials {
+    justify-content: center;
+  }
+  .description {
+    margin: 0 auto;
+  }
+}
+.brand {
+  display: flex;
+  align-items: center; /* Alinha verticalmente ao centro do texto */
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.logoContainer {
+  width: 40px;  /* Mesma largura do componente Image */
+  height: 40px; /* Mesma altura do componente Image */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; /* IMPEDE a distorção se o espaço diminuir */
+}
+
+.logoIcon {
+  object-fit: contain; /* Garante que a imagem caiba no quadro sem esticar */
+  width: 100% !important;
+  height: auto !important;
+}
+
+.brandName {
+  color: #D4AF37;
+  font-weight: 800;
+  letter-spacing: 2px;
+  font-size: 1.3rem;
+  line-height: 1; /* Evita que o line-height do texto afete a altura do container */
+}
+.loginLink {
+  font-size: 0.85rem;
   opacity: 0.7;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.3s ease;
+}
+
+.loginLink:hover {
+  opacity: 1;
+  color: #D4AF37; /* Cor de destaque em ouro */
+}
+
+/* Garante que a logo não distorça se o container mudar */
+.footerLogo {
+  object-fit: contain;
+  max-width: 100%;
+  height: auto;
 }

@@ -1,0 +1,54 @@
+.container { animation: fadeIn 0.4s ease-out; }
+.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+.header h1 { font-size: 1.5rem; color: #1e293b; font-weight: 700; }
+.header p { color: #64748b; font-size: 0.9rem; }
+
+.addBtn {
+  background: #2563eb; /* Azul para o Blog */
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+.addBtn:hover { background: #1d4ed8; }
+
+.tableCard { background: white; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; }
+.tableActions { padding: 1.25rem; border-bottom: 1px solid #f1f5f9; }
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f8fafc;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  width: 320px;
+}
+.searchBar input { background: none; border: none; outline: none; font-size: 0.9rem; width: 100%; }
+
+.table { width: 100%; border-collapse: collapse; text-align: left; }
+.table th { background: #f8fafc; padding: 1rem 1.5rem; font-size: 0.75rem; text-transform: uppercase; color: #94a3b8; letter-spacing: 0.5px; }
+.table td { padding: 1.25rem 1.5rem; border-bottom: 1px solid #f1f5f9; font-size: 0.9rem; }
+
+.postTitleArea { display: flex; align-items: center; gap: 12px; }
+.postIcon { color: #2563eb; background: #eff6ff; padding: 8px; border-radius: 6px; display: flex; }
+
+.dateTag { display: flex; align-items: center; gap: 6px; color: #64748b; font-size: 0.85rem; }
+
+.slug { background: #f1f5f9; color: #475569; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; }
+
+.actionsCell { display: flex; justify-content: flex-end; gap: 10px; }
+.editBtn, .deleteBtn { width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: 0.2s; cursor: pointer; border: none; }
+.editBtn { background: #eff6ff; color: #2563eb; }
+.deleteBtn { background: #fef2f2; color: #ef4444; }
+
+.emptyState { text-align: center; padding: 3rem !important; color: #94a3b8; }
+.loading { padding: 2rem; text-align: center; color: #64748b; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
